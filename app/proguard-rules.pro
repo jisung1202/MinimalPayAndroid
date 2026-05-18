@@ -1,0 +1,1 @@
+# MinimalPay — default ProGuard rules

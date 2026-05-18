@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.MinimalPay" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/mp_primary</item>
+        <item name="colorOnPrimary">@color/mp_on_primary</item>
+        <item name="colorPrimaryContainer">@color/mp_primary_container</item>
+        <item name="android:windowBackground">@color/mp_bg</item>
+        <item name="android:statusBarColor">@color/mp_surface</item>
+        <item name="android:navigationBarColor">@color/mp_surface</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+</resources>

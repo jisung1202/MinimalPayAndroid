@@ -1,11 +1,11 @@
 package com.minimalpay.settlement.domain;
 
 /**
- * GRASP — Information Expert: 멤버 고유 정보를 보유한다.
+ * GRASP Information Expert: owns member identity, account, and balance state.
  */
 public class Member {
     private final String id;
-    private String name;
+    private final String name;
     private String bankAccount;
     private long balanceMinor;
 
@@ -51,6 +51,6 @@ public class Member {
         if (hasBankAccount()) {
             return name + " (" + bankAccount + ")";
         }
-        return name + " [계좌없음]";
+        return name + " [계좌 없음]";
     }
 }

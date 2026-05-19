@@ -7,7 +7,8 @@ import androidx.appcompat.app.AlertDialog;
 import com.minimalpay.settlement.domain.Member;
 
 /**
- * GRASP — Concrete Class: 앱 연동(계좌 있을 때).
+ * Concrete transfer linker. This demo shows a confirmation dialog instead of
+ * opening a real banking app.
  */
 public class AppTransferLinker implements TransferLinker {
 
@@ -15,15 +16,16 @@ public class AppTransferLinker implements TransferLinker {
     public void openTransfer(Context context, Member from, Member to, long amountMinor,
                              TransferCallback callback) {
         if (!to.hasBankAccount()) {
-            callback.onFailure(to.getName() + " 님의 계좌 정보가 없습니다.");
+            callback.onFailure(to.getName() + "님의 계좌 정보가 없습니다.");
             return;
         }
         new AlertDialog.Builder(context)
-                .setTitle("외부 송금")
+                .setTitle("송금 확인")
                 .setMessage(String.format(
-                        "[MinimalPay 앱 연동 완료]\n%s → %s\n%,d원 → %s",
+                        "%s님이 %s님에게 %,d원을 송금합니다.\n계좌: %s",
                         from.getName(), to.getName(), amountMinor, to.getBankAccount()))
-                .setPositiveButton("확인", (d, w) -> callback.onSuccess())
+                .setPositiveButton("완료", (dialog, which) -> callback.onSuccess())
+                .setNegativeButton("취소", null)
                 .show();
     }
 }

@@ -10,7 +10,7 @@ import com.minimalpay.settlement.R;
 import com.minimalpay.settlement.domain.Member;
 
 /**
- * UC-4 Extend: 계좌 부재 시 가이드 팝업 후 수동 입력.
+ * UC-4 Extend: asks for account information when the receiver has no account.
  */
 public class ManualAccountTransferLinker extends AppTransferLinker {
 
@@ -19,11 +19,13 @@ public class ManualAccountTransferLinker extends AppTransferLinker {
                              TransferCallback callback) {
         if (!to.hasBankAccount()) {
             new AlertDialog.Builder(context)
-                    .setTitle("UC-4 Extend — 수동 입력 유도")
+                    .setTitle("계좌 정보 필요")
                     .setMessage(context.getString(R.string.extend_guide)
-                            + "\n\n▶ 수신자: " + to.getName())
-                    .setPositiveButton("계좌 입력", (d, w) -> showAccountInput(context, from, to, amountMinor, callback))
-                    .setNegativeButton("취소", (d, w) -> callback.onFailure("계좌 입력이 취소되었습니다."))
+                            + "\n\n받는 사람: " + to.getName())
+                    .setPositiveButton("계좌 입력", (dialog, which) ->
+                            showAccountInput(context, from, to, amountMinor, callback))
+                    .setNegativeButton("취소", (dialog, which) ->
+                            callback.onFailure("계좌 입력이 취소되었습니다."))
                     .show();
             return;
         }
@@ -34,11 +36,11 @@ public class ManualAccountTransferLinker extends AppTransferLinker {
                                   TransferCallback callback) {
         EditText input = new EditText(context);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
-        input.setHint("신한은행 110-123-456789");
+        input.setHint("예: 신한 110-123-456789");
 
         new AlertDialog.Builder(context)
-                .setTitle("계좌 수동 입력")
-                .setMessage(to.getName() + " 님의 은행/계좌번호")
+                .setTitle("계좌 직접 입력")
+                .setMessage(to.getName() + "님의 받을 계좌를 입력해 주세요.")
                 .setView(input)
                 .setPositiveButton("확인", (dialog, which) -> {
                     String text = input.getText().toString().trim();
@@ -49,7 +51,8 @@ public class ManualAccountTransferLinker extends AppTransferLinker {
                     to.setBankAccount(text);
                     super.openTransfer(context, from, to, amountMinor, callback);
                 })
-                .setNegativeButton("취소", (d, w) -> callback.onFailure("계좌 입력이 취소되었습니다."))
+                .setNegativeButton("취소", (dialog, which) ->
+                        callback.onFailure("계좌 입력이 취소되었습니다."))
                 .show();
     }
 }

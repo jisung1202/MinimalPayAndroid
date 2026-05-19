@@ -8,17 +8,21 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * GRASP — Information Expert: 그룹·멤버·지출 집합 관리.
+ * GRASP Information Expert: manages group members, expenses, and balances.
  */
 public class SettlementGroup {
     private final String id;
-    private String name;
+    private final String name;
     private final Map<String, Member> members = new LinkedHashMap<>();
     private final List<Expense> expenses = new ArrayList<>();
 
     public SettlementGroup(String id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
@@ -34,9 +38,9 @@ public class SettlementGroup {
     }
 
     public Member addMember(String name) {
-        Member m = new Member("M-" + (members.size() + 1), name);
-        members.put(m.getId(), m);
-        return m;
+        Member member = new Member("M-" + (members.size() + 1), name);
+        members.put(member.getId(), member);
+        return member;
     }
 
     public Member findMemberById(String id) {
@@ -48,13 +52,13 @@ public class SettlementGroup {
     }
 
     public void recalculateBalances() {
-        for (Member m : members.values()) {
-            m.addBalanceMinor(-m.getBalanceMinor());
+        for (Member member : members.values()) {
+            member.addBalanceMinor(-member.getBalanceMinor());
         }
-        for (Expense e : expenses) {
-            e.getPayer().addBalanceMinor(e.getTotalAmountMinor());
-            for (Member p : e.getParticipants()) {
-                p.addBalanceMinor(-e.getShareMinor(p));
+        for (Expense expense : expenses) {
+            expense.getPayer().addBalanceMinor(expense.getTotalAmountMinor());
+            for (Member participant : expense.getParticipants()) {
+                participant.addBalanceMinor(-expense.getShareMinor(participant));
             }
         }
     }

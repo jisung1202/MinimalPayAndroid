@@ -6,7 +6,7 @@ import com.minimalpay.settlement.domain.Member;
 import java.util.ArrayList;
 import java.util.List;
 
-/** 앱 전역 상태: Controller + 멤버 + 마지막 리포트 */
+/** App-wide state shared by the four-step wizard. */
 public class SettlementSession {
 
     private final SettlementController controller = new SettlementController();
@@ -41,10 +41,12 @@ public class SettlementSession {
 
     public void clearMembers() {
         members.clear();
+        lastReport = null;
     }
 
     public void addMember(Member member) {
         members.add(member);
+        lastReport = null;
     }
 
     public int getExpectedMemberCount() {

@@ -31,10 +31,10 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.Ho
 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
-        Member m = members.get(position);
+        Member member = members.get(position);
         holder.index.setText(String.valueOf(position + 1));
-        holder.name.setText(m.getName());
-        holder.account.setText(m.hasBankAccount() ? m.getBankAccount() : "계좌 미등록");
+        holder.name.setText(member.getName());
+        holder.account.setText(member.hasBankAccount() ? member.getBankAccount() : "계좌 미등록");
     }
 
     @Override

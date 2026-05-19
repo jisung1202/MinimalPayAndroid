@@ -22,7 +22,7 @@ import com.minimalpay.settlement.R;
 import com.minimalpay.settlement.domain.Member;
 
 /**
- * UC-1: 그룹 카드 안에 참여 멤버 추가·목록을 포함.
+ * UC-1: create a group and register all participating members.
  */
 public class GroupFragment extends Fragment {
 
@@ -86,13 +86,13 @@ public class GroupFragment extends Fragment {
     private void onCreateGroup() {
         String name = textOf(editGroup);
         if (name.isEmpty()) {
-            toast("그룹명을 입력하세요.");
+            toast("그룹명을 입력해 주세요.");
             return;
         }
 
         String countText = textOf(editMemberCount);
         if (countText.isEmpty()) {
-            toast("참여 인원 수를 입력하세요.");
+            toast("참여 인원 수를 입력해 주세요.");
             return;
         }
 
@@ -106,7 +106,7 @@ public class GroupFragment extends Fragment {
         } catch (NumberFormatException ex) {
             new AlertDialog.Builder(requireContext())
                     .setTitle("입력 오류")
-                    .setMessage("인원 수는 숫자로 입력하세요.")
+                    .setMessage("참여 인원은 숫자로 입력해 주세요.")
                     .setPositiveButton("확인", null)
                     .show();
             return;
@@ -118,7 +118,7 @@ public class GroupFragment extends Fragment {
         session.clearMembers();
         adapter.notifyDataSetChanged();
         refreshUi();
-        toast(String.format("「%s」 그룹이 생성되었습니다. 아래에서 멤버 %d명을 추가하세요.", name, expected));
+        toast(String.format("%s 그룹을 만들었습니다. 멤버 %d명을 추가해 주세요.", name, expected));
         notifyHost();
     }
 
@@ -130,25 +130,25 @@ public class GroupFragment extends Fragment {
 
         int expected = session.getExpectedMemberCount();
         if (session.getMembers().size() >= expected) {
-            toast("이 그룹의 멤버 " + expected + "명이 모두 등록되었습니다.");
+            toast("이 그룹의 멤버가 모두 등록되었습니다.");
             return;
         }
 
         try {
             String name = textOf(editMemberName);
             if (name.isEmpty()) {
-                toast("멤버 이름을 입력하세요.");
+                toast("멤버 이름을 입력해 주세요.");
                 return;
             }
-            Member m = session.getController().addMember(name, textOf(editMemberAccount));
-            session.addMember(m);
+            Member member = session.getController().addMember(name, textOf(editMemberAccount));
+            session.addMember(member);
             adapter.notifyItemInserted(session.getMembers().size() - 1);
             editMemberName.setText("");
             editMemberAccount.setText("");
             refreshUi();
 
             if (session.isGroupStepComplete()) {
-                toast("모든 참여 멤버가 등록되었습니다. [다음]을 눌러주세요.");
+                toast("모든 참여 멤버가 등록되었습니다. [다음]을 눌러 주세요.");
             }
             notifyHost();
         } catch (Exception ex) {

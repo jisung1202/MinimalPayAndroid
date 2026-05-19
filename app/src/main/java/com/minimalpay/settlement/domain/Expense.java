@@ -1,11 +1,11 @@
 package com.minimalpay.settlement.domain;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 /**
- * GRASP — Information Expert / Creator: 지출·분할 결과 캡슐화. 분할은 Strategy에 위임.
+ * GRASP Information Expert / Creator: expense owns payment facts and delegates
+ * share calculation to a settlement strategy.
  */
 public class Expense {
     private final String id;
@@ -18,18 +18,24 @@ public class Expense {
 
     public Expense(String id, String description, long totalAmountMinor,
                    Member payer, List<Member> participants, SettlementStrategy strategy) {
+        if (totalAmountMinor <= 0) {
+            throw new IllegalArgumentException("금액은 1원 이상이어야 합니다.");
+        }
+        if (payer == null) {
+            throw new IllegalArgumentException("결제자를 선택해 주세요.");
+        }
         if (participants == null || participants.isEmpty()) {
-            throw new IllegalArgumentException("참여 멤버가 필요합니다.");
+            throw new IllegalArgumentException("정산 참여 멤버가 필요합니다.");
         }
         if (strategy == null) {
-            throw new IllegalArgumentException("정산 전략이 필요합니다.");
+            throw new IllegalArgumentException("정산 방식이 필요합니다.");
         }
         this.id = id;
         this.description = description;
         this.totalAmountMinor = totalAmountMinor;
         this.payer = payer;
         this.participants = List.copyOf(participants);
-        this.strategyName = strategy.getClass().getSimpleName();
+        this.strategyName = strategy.getDisplayName();
         this.shareByMemberIdMinor = strategy.calculateShares(totalAmountMinor, payer, participants);
     }
 
@@ -53,8 +59,8 @@ public class Expense {
         return strategyName;
     }
 
-    public long getShareMinor(Member m) {
-        Long share = shareByMemberIdMinor.get(m.getId());
+    public long getShareMinor(Member member) {
+        Long share = shareByMemberIdMinor.get(member.getId());
         return share != null ? share : 0L;
     }
 }

@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="[다음] 이동 조건: 정산 리포트 생성 완료"
+        android:text="개인별 잔액과 최소 송금 경로를 계산합니다."
         android:textColor="@color/mp_text_secondary"
         android:textSize="13sp" />
 
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/btn_report"
-        app:cornerRadius="12dp" />
+        app:cornerRadius="8dp" />
 
     <ScrollView
         android:layout_width="match_parent"

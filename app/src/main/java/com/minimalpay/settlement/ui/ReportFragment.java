@@ -18,7 +18,7 @@ import com.minimalpay.settlement.R;
 import com.minimalpay.settlement.control.SettlementController;
 
 /**
- * UC-3: requestSettlementReport() — SSD
+ * UC-3: requestSettlementReport().
  */
 public class ReportFragment extends Fragment {
 
@@ -49,7 +49,7 @@ public class ReportFragment extends Fragment {
                     session.getController().requestSettlementReport();
             session.setLastReport(report);
             textReport.setText(report.formatAsText());
-            Toast.makeText(requireContext(), "리포트 생성 완료 — [다음]으로 송금 단계로 이동하세요", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "정산 리포트를 생성했습니다.", Toast.LENGTH_SHORT).show();
             if (requireActivity() instanceof MainActivity) {
                 ((MainActivity) requireActivity()).refreshWizardState();
             }

@@ -12,7 +12,7 @@ import com.minimalpay.settlement.MinimalPayApp;
 import com.minimalpay.settlement.R;
 
 /**
- * 위저드형 4단계: [이전] [다음]으로만 이동 (스와이프 비활성).
+ * Four-step wizard. Users move only through Previous / Next buttons.
  */
 public class MainActivity extends AppCompatActivity {
 
@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setCurrentItem(current + 1, true);
     }
 
-    /** Fragment에서 UI 갱신용 */
     public void refreshWizardState() {
         updateWizardChrome(viewPager.getCurrentItem());
     }

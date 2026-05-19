@@ -23,7 +23,7 @@ import com.minimalpay.settlement.domain.Member;
 import java.util.Map;
 
 /**
- * UC-4: 송금 연동 (Extend)
+ * UC-4: transfer linking extension.
  */
 public class TransferFragment extends Fragment {
 
@@ -56,13 +56,13 @@ public class TransferFragment extends Fragment {
     private void updatePreview() {
         SettlementController.SettlementReport report = session.getLastReport();
         if (report == null || report.getTransfers().isEmpty()) {
-            textPreview.setText("먼저 [정산] 탭에서 리포트를 생성하세요.");
+            textPreview.setText("먼저 [정산] 화면에서 리포트를 생성해 주세요.");
             return;
         }
         OptimizationEngine.TransferEdge edge = report.getTransfers().get(0);
         Map<String, Member> byId = new java.util.HashMap<>();
-        for (Member m : session.getMembers()) {
-            byId.put(m.getId(), m);
+        for (Member member : session.getMembers()) {
+            byId.put(member.getId(), member);
         }
         Member from = byId.get(edge.fromMemberId);
         Member to = byId.get(edge.toMemberId);
@@ -72,17 +72,17 @@ public class TransferFragment extends Fragment {
         }
         String account = to.hasBankAccount() ? to.getBankAccount() : "계좌 미등록";
         textPreview.setText(String.format(
-                "▶ [%s] ──(%s원)──> [%s]\n   (%s)",
+                "%s -> %s\n%,d원\n%s",
                 from.getName(),
-                String.format("%,d", edge.amountMinor),
                 to.getName(),
+                edge.amountMinor,
                 account));
     }
 
     private void onTransfer() {
         SettlementController.SettlementReport report = session.getLastReport();
         if (report == null || report.getTransfers().isEmpty()) {
-            Toast.makeText(requireContext(), "먼저 정산 리포트를 생성하세요.", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), "먼저 정산 리포트를 생성해 주세요.", Toast.LENGTH_LONG).show();
             return;
         }
         OptimizationEngine.TransferEdge edge = report.getTransfers().get(0);
@@ -94,13 +94,13 @@ public class TransferFragment extends Fragment {
                 new TransferCallback() {
                     @Override
                     public void onSuccess() {
-                        Toast.makeText(requireContext(), "송금 처리 완료", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "송금 처리를 완료했습니다.", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onFailure(String message) {
                         new AlertDialog.Builder(requireContext())
-                                .setTitle("송금 실패 (예외 처리)")
+                                .setTitle("송금 실패")
                                 .setMessage(message)
                                 .setPositiveButton("확인", null)
                                 .show();

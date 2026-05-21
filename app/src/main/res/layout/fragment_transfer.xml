@@ -19,14 +19,6 @@
             android:textStyle="bold" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="최소 송금 경로의 첫 번째 송금을 실행합니다."
-            android:textColor="@color/mp_text_secondary"
-            android:textSize="13sp" />
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -35,27 +27,110 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/panelTransferReady"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/bg_card"
-            android:padding="14dp"
-            android:text="계좌가 없으면 UC-4 Extend 흐름으로 계좌 입력 창을 띄웁니다."
-            android:textColor="@color/mp_text_secondary"
-            android:textSize="14sp" />
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="다음 송금"
+                android:textColor="@color/mp_text_primary"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textTransferFrom"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_member_inner"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:textColor="@color/mp_text_primary"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="44dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="12dp"
+                    android:text="→"
+                    android:textColor="@color/mp_primary"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textTransferTo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_member_inner"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:textColor="@color/mp_text_primary"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textTransferAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_member_inner"
+                android:gravity="center"
+                android:padding="14dp"
+                android:textColor="@color/mp_primary"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textTransferAccount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_member_inner"
+                android:padding="12dp"
+                android:textColor="@color/mp_text_secondary"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/textTransferLink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_member_inner"
+                android:padding="12dp"
+                android:textColor="@color/mp_text_secondary"
+                android:textIsSelectable="true"
+                android:textSize="12sp" />
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/textTransferPreview"
+            android:id="@+id/textTransferEmpty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/bg_card"
-            android:fontFamily="monospace"
-            android:padding="14dp"
-            android:text="송금 미리보기가 여기에 표시됩니다."
-            android:textColor="@color/mp_text_primary"
-            android:textSize="13sp" />
+            android:gravity="center"
+            android:padding="24dp"
+            android:text="정산 리포트를 생성하면 송금 정보가 표시됩니다."
+            android:textColor="@color/mp_text_secondary"
+            android:textSize="14sp"
+            android:visibility="gone" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnTransfer"

@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +21,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.minimalpay.settlement.MinimalPayApp;
 import com.minimalpay.settlement.R;
+import com.minimalpay.settlement.control.BankCatalog;
 import com.minimalpay.settlement.domain.Member;
 
 /**
@@ -39,6 +42,7 @@ public class GroupFragment extends Fragment {
     private TextInputEditText editMemberCount;
     private TextInputEditText editMemberName;
     private TextInputEditText editMemberAccount;
+    private Spinner spinnerMemberBank;
     private MaterialButton btnAddMember;
 
     @Nullable
@@ -64,7 +68,13 @@ public class GroupFragment extends Fragment {
         editMemberCount = view.findViewById(R.id.editMemberCount);
         editMemberName = view.findViewById(R.id.editMemberName);
         editMemberAccount = view.findViewById(R.id.editMemberAccount);
+        spinnerMemberBank = view.findViewById(R.id.spinnerMemberBank);
         btnAddMember = view.findViewById(R.id.btnAddMember);
+
+        ArrayAdapter<String> bankAdapter = new ArrayAdapter<>(
+                requireContext(), android.R.layout.simple_spinner_item, BankCatalog.BANK_NAMES);
+        bankAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerMemberBank.setAdapter(bankAdapter);
 
         RecyclerView recycler = view.findViewById(R.id.recyclerMembers);
         recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -140,11 +150,19 @@ public class GroupFragment extends Fragment {
                 toast("멤버 이름을 입력해 주세요.");
                 return;
             }
-            Member member = session.getController().addMember(name, textOf(editMemberAccount));
+
+            String accountNumber = textOf(editMemberAccount);
+            String account = "";
+            if (!accountNumber.isEmpty()) {
+                account = BankCatalog.formatAccount((String) spinnerMemberBank.getSelectedItem(), accountNumber);
+            }
+
+            Member member = session.getController().addMember(name, account);
             session.addMember(member);
             adapter.notifyItemInserted(session.getMembers().size() - 1);
             editMemberName.setText("");
             editMemberAccount.setText("");
+            spinnerMemberBank.setSelection(0);
             refreshUi();
 
             if (session.isGroupStepComplete()) {
@@ -183,6 +201,7 @@ public class GroupFragment extends Fragment {
 
         editMemberName.setEnabled(!full);
         editMemberAccount.setEnabled(!full);
+        spinnerMemberBank.setEnabled(!full);
     }
 
     private void notifyHost() {

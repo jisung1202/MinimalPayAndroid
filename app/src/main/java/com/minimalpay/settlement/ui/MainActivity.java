@@ -69,7 +69,12 @@ public class MainActivity extends AppCompatActivity {
         int current = viewPager.getCurrentItem();
 
         if (current == StepValidator.STEP_TRANSFER) {
+            session.resetAll();
             Toast.makeText(this, R.string.wizard_complete, Toast.LENGTH_LONG).show();
+            viewPager.setAdapter(new MainPagerAdapter(this));
+            viewPager.setOffscreenPageLimit(4);
+            viewPager.setCurrentItem(StepValidator.STEP_GROUP, false);
+            updateWizardChrome(StepValidator.STEP_GROUP);
             return;
         }
 

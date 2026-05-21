@@ -115,30 +115,21 @@
                     android:text="고정 금액 대상"
                     android:textColor="@color/mp_text_secondary" />
 
-                <Spinner
-                    android:id="@+id/spinnerFixedMember"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="4dp"
-                    android:background="@drawable/bg_card" />
-
-                <com.google.android.material.textfield.TextInputLayout
+                <LinearLayout
+                    android:id="@+id/containerFixedRows"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:hint="고정 금액 (원)"
-                    app:boxBackgroundMode="outline"
-                    app:boxCornerRadiusBottomEnd="8dp"
-                    app:boxCornerRadiusBottomStart="8dp"
-                    app:boxCornerRadiusTopEnd="8dp"
-                    app:boxCornerRadiusTopStart="8dp">
+                    android:orientation="vertical" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editFixedAmount"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="number" />
-                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAddFixedAmount"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="고정 금액 대상 추가"
+                    app:cornerRadius="8dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -149,25 +140,27 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <com.google.android.material.textfield.TextInputLayout
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="품목"
+                    android:textColor="@color/mp_text_secondary" />
+
+                <LinearLayout
+                    android:id="@+id/containerItemRows"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="품목 입력"
-                    app:boxBackgroundMode="outline"
-                    app:boxCornerRadiusBottomEnd="8dp"
-                    app:boxCornerRadiusBottomStart="8dp"
-                    app:boxCornerRadiusTopEnd="8dp"
-                    app:boxCornerRadiusTopStart="8dp">
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editItemizedLines"
-                        android:layout_width="match_parent"
-                        android:layout_height="140dp"
-                        android:gravity="top"
-                        android:inputType="textMultiLine"
-                        android:singleLine="false"
-                        android:textSize="13sp" />
-                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAddItem"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="품목 추가"
+                    app:cornerRadius="8dp" />
             </LinearLayout>
 
             <TextView
@@ -205,6 +198,64 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/btn_register_expense"
                 app:cornerRadius="8dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/panelRegisteredExpenses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_card"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="추가된 지출"
+                    android:textColor="@color/mp_text_primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textExpenseCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_member_inner"
+                    android:paddingStart="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="6dp"
+                    android:text="0건"
+                    android:textColor="@color/mp_primary"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textExpenseEmpty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:padding="16dp"
+                android:text="아직 추가된 지출이 없습니다."
+                android:textColor="@color/mp_text_secondary"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:id="@+id/containerRegisteredExpenses"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical" />
         </LinearLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

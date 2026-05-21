@@ -39,6 +39,10 @@ public class Expense {
         this.shareByMemberIdMinor = strategy.calculateShares(totalAmountMinor, payer, participants);
     }
 
+    public String getId() {
+        return id;
+    }
+
     public String getDescription() {
         return description;
     }

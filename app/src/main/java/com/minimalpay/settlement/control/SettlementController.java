@@ -27,6 +27,10 @@ public class SettlementController {
         currentGroup = new SettlementGroup("G-1", groupName);
     }
 
+    public void reset() {
+        currentGroup = null;
+    }
+
     public Member addMember(String memberName, String optionalAccount) {
         requireGroup();
         Member member = currentGroup.addMember(memberName);
@@ -47,6 +51,11 @@ public class SettlementController {
 
     public int getExpenseCount() {
         return currentGroup != null ? currentGroup.getExpenses().size() : 0;
+    }
+
+    public List<Expense> getExpenses() {
+        requireGroup();
+        return currentGroup.getExpenses();
     }
 
     public Expense registerExpense(String description, long amountWon, String payerMemberId,
@@ -137,8 +146,20 @@ public class SettlementController {
             this.members = members;
         }
 
+        public String getGroupName() {
+            return groupName;
+        }
+
+        public Map<String, Long> getNetBalanceMinor() {
+            return netBalanceMinor;
+        }
+
         public List<OptimizationEngine.TransferEdge> getTransfers() {
             return transfers;
+        }
+
+        public Collection<Member> getMembers() {
+            return members;
         }
 
         public String formatAsText() {

@@ -33,7 +33,7 @@ public class ItemizedSplitStrategy implements SettlementStrategy {
             for (int i = 0; i < item.memberIds.size(); i++) {
                 String memberId = item.memberIds.get(i);
                 if (!shares.containsKey(memberId)) {
-                    throw new IllegalArgumentException("품목 참여자가 전체 참여 멤버에 포함되어야 합니다: " + memberId);
+                    throw new IllegalArgumentException("품목 참여자는 전체 참여 멤버에 포함되어야 합니다.");
                 }
                 long add = base + (i < remainder ? 1 : 0);
                 shares.put(memberId, shares.get(memberId) + add);
@@ -65,7 +65,7 @@ public class ItemizedSplitStrategy implements SettlementStrategy {
                 throw new IllegalArgumentException("품목 금액은 1원 이상이어야 합니다.");
             }
             if (memberIds == null || memberIds.isEmpty()) {
-                throw new IllegalArgumentException("품목별 참여자를 입력해 주세요.");
+                throw new IllegalArgumentException("품목별 참여자를 1명 이상 선택해 주세요.");
             }
             this.name = name.trim();
             this.amountMinor = amountMinor;
